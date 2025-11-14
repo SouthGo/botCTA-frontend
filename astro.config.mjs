@@ -10,7 +10,8 @@ const adapter = process.env.VERCEL
   ? vercel()
   : node({ 
       mode: 'standalone',
-      hostname: '0.0.0.0'
+      hostname: '0.0.0.0',
+      port: process.env.PORT ? parseInt(process.env.PORT) : undefined
     });
 
 export default defineConfig({

@@ -8,7 +8,10 @@ import { defineConfig } from 'astro/config';
 // Railway establece PORT, Vercel establece VERCEL
 const adapter = process.env.VERCEL 
   ? vercel()
-  : node({ mode: 'standalone' });
+  : node({ 
+      mode: 'standalone',
+      hostname: '0.0.0.0'
+    });
 
 export default defineConfig({
   output: 'server',

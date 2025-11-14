@@ -1,0 +1,37 @@
+{
+  "name": "albion-cta-system-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "lint": "eslint src --ext .ts,.tsx,.astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^3.3.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/vercel": "^5.1.0",
+    "@supabase/supabase-js": "^2.46.1",
+    "astro": "^4.11.4",
+    "lucide-react": "^0.460.0",
+    "nanoid": "^5.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.12",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-astro": "^0.31.0",
+    "eslint-plugin-react": "^7.34.3",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
+

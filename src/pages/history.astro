@@ -1,0 +1,76 @@
+---
+import DashboardLayout from '@layouts/DashboardLayout.astro';
+import LoginButton from '@components/LoginButton.jsx';
+import { api } from '@lib/api.js';
+import { readSessionCookie } from '@lib/auth.js';
+
+const sessionCookie = Astro.cookies.get('session')?.value ?? '';
+const user = readSessionCookie(sessionCookie);
+const ctas = await api.listCtas();
+const closedCtas = ctas.filter((cta) => cta.status === 'closed');
+---
+
+<DashboardLayout title="Historial de CTAs">
+  <div slot="header-actions">
+    <LoginButton user={user} />
+  </div>
+
+  <section class="space-y-6">
+    <header>
+      <h2 class="text-2xl font-semibold text-white">Historial</h2>
+      <p class="text-sm text-slate-400">
+        Consulta las CTA finalizadas y revisa cómo se asignaron los roles.
+      </p>
+    </header>
+
+    <div class="rounded-xl border border-white/5 bg-surface/60">
+      <table class="min-w-full divide-y divide-white/5 text-sm">
+        <thead class="bg-white/5 text-xs uppercase tracking-widest text-slate-400">
+          <tr>
+            <th class="px-4 py-3 text-left">CTA</th>
+            <th class="px-4 py-3 text-left">Fecha</th>
+            <th class="px-4 py-3 text-left">Caller</th>
+            <th class="px-4 py-3 text-left">Estado</th>
+            <th class="px-4 py-3 text-left">Detalle</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5 text-slate-200">
+          {closedCtas.length ? (
+            closedCtas.map((cta) => (
+              <tr>
+                <td class="px-4 py-3">
+                  <p class="font-semibold text-white">{cta.title}</p>
+                  <p class="text-xs uppercase tracking-widest text-slate-500">#{cta.id}</p>
+                </td>
+                <td class="px-4 py-3">
+                  {cta.date ? new Date(cta.date).toLocaleString() : 'Sin fecha'}
+                </td>
+                <td class="px-4 py-3">{cta.created_by}</td>
+                <td class="px-4 py-3">
+                  <span class="rounded-full bg-success/20 px-3 py-1 text-xs uppercase tracking-widest text-success">
+                    Cerrada
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <a
+                    href={`/ctas/${cta.id}`}
+                    class="text-primary underline-offset-4 hover:underline"
+                  >
+                    Ver detalle
+                  </a>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td class="px-4 py-3 text-slate-400" colspan="5">
+                Aún no hay CTA cerradas.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</DashboardLayout>
+

@@ -3,6 +3,7 @@ import DashboardLayout from '@layouts/DashboardLayout.astro';
 import AssignmentPanel from '@components/AssignmentPanel.jsx';
 import CloseCtaButton from '@components/CloseCtaButton.jsx';
 import LoginButton from '@components/LoginButton.jsx';
+import PostulateButton from '@components/PostulateButton.jsx';
 import RoleBadge from '@components/RoleBadge.jsx';
 import { api } from '@lib/api.js';
 import { readSessionCookie } from '@lib/auth.js';
@@ -24,6 +25,7 @@ const allowedCallers = (import.meta.env.PUBLIC_ALLOWED_CALLERS ?? '')
 const isCaller = Boolean(
   user && (allowedCallers.length === 0 || allowedCallers.includes(user.id))
 );
+const isOpen = cta.status === 'open';
 ---
 
 <DashboardLayout title={`CTA: ${cta.title}`}>
@@ -67,6 +69,19 @@ const isCaller = Boolean(
         <p class="text-sm text-slate-400">No se definió una composición para esta CTA.</p>
       )}
     </section>
+
+    {isOpen && user && (
+      <section class="rounded-xl border border-white/5 bg-surface/60 p-6 space-y-4">
+        <h2 class="text-lg font-semibold text-white">Postulación</h2>
+        <PostulateButton
+          client:load
+          ctaId={cta.id}
+          userId={user.id}
+          userName={user.username || user.name}
+          postulants={postulants}
+        />
+      </section>
+    )}
 
     <section class="rounded-xl border border-white/5 bg-surface/60 p-6 space-y-4">
       <header class="flex items-center justify-between">

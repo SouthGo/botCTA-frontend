@@ -16,18 +16,26 @@ const ctas = await api.listCtas();
   </div>
 
   <section class="space-y-6">
-    <header class="flex flex-col gap-2">
-      <h2 class="text-2xl font-semibold text-white">CTAs activas</h2>
-      <p class="text-sm text-slate-400">
-        Gestiona las CTA del gremio, consulta postulantes y monitoriza el estado.
-      </p>
+    <header class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-semibold text-white">CTAs activas</h2>
+        <p class="text-sm text-slate-400">
+          Gestiona las CTA del gremio, consulta postulantes y monitoriza el estado.
+        </p>
+      </div>
+      <a
+        href="/ctas/create"
+        class="inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/20 px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/30 transition whitespace-nowrap"
+      >
+        + Crear nueva CTA
+      </a>
     </header>
 
     <div class="grid gap-6 md:grid-cols-2">
       {ctas.length ? (
         ctas.map((cta) => <CtaCard cta={cta} href={`/ctas/${cta.id}`} />)
       ) : (
-        <p class="text-slate-400">No hay CTAs disponibles. ¡Crea una desde Discord!</p>
+        <p class="text-slate-400">No hay CTAs disponibles. <a href="/ctas/create" class="text-primary hover:underline">¡Crea una nueva CTA!</a></p>
       )}
     </div>
   </section>

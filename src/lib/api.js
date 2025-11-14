@@ -33,6 +33,21 @@ export const api = {
 
     return { cta, postulants };
   },
+  createCta: (payload) =>
+    request('/cta/create', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }),
+  postular: (payload) =>
+    request('/cta/postular', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    }),
+  leaveCta: (ctaId, userId) =>
+    request('/postulants/leave', {
+      method: 'DELETE',
+      body: JSON.stringify({ ctaId, userId })
+    }),
   assignRoles: (payload) =>
     request('/cta/asignar', {
       method: 'POST',

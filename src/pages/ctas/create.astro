@@ -1,0 +1,31 @@
+---
+import DashboardLayout from '@layouts/DashboardLayout.astro';
+import LoginButton from '@components/LoginButton.jsx';
+import CreateCtaForm from '@components/CreateCtaForm.jsx';
+import { readSessionCookie } from '@lib/auth.js';
+
+const sessionCookie = Astro.cookies.get('session')?.value ?? '';
+const user = readSessionCookie(sessionCookie);
+
+if (!user) {
+  return Astro.redirect('/api/auth/login');
+}
+---
+
+<DashboardLayout title="Crear nueva CTA">
+  <div slot="header-actions">
+    <LoginButton user={user} />
+  </div>
+
+  <section class="space-y-6">
+    <header class="flex flex-col gap-2">
+      <h2 class="text-2xl font-semibold text-white">Crear nueva CTA</h2>
+      <p class="text-sm text-slate-400">
+        Completa el formulario para crear una nueva CTA para el gremio.
+      </p>
+    </header>
+
+    <CreateCtaForm client:load user={user} />
+  </section>
+</DashboardLayout>
+

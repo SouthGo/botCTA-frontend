@@ -2,38 +2,48 @@
 
 Panel web para gestionar CTAs del gremio Albion Online.
 
-## 🚀 Despliegue en Vercel
+## 🚀 Despliegue en Railway
 
 ### Variables de Entorno Requeridas
 
-Configura las siguientes variables en Vercel:
+Configura las siguientes variables en Railway:
 
-#### Públicas (accesibles desde el cliente):
+#### Públicas (marcar como "Public" en Railway):
 - `PUBLIC_BACKEND_URL` - URL del backend (ej: `https://botcta-backend-production.up.railway.app`)
 - `PUBLIC_ALLOWED_CALLERS` - IDs de Discord de los callers permitidos (separados por comas)
 
-#### Privadas (solo servidor):
+#### Privadas (NO marcar como "Public"):
 - `DISCORD_CLIENT_ID` - ID de la aplicación Discord
 - `DISCORD_CLIENT_SECRET` - Secret de la aplicación Discord
-- `DISCORD_REDIRECT_URI` - URI de redirección OAuth (ej: `https://tu-dominio.vercel.app/api/auth/callback`)
+- `DISCORD_REDIRECT_URI` - URI de redirección OAuth (ej: `https://tu-dominio.up.railway.app/api/auth/callback`)
 
-### Pasos para Desplegar
+### Pasos para Desplegar en Railway
 
-1. **Conectar repositorio a Vercel:**
-   - Ve a [Vercel](https://vercel.com)
-   - Importa el repositorio de GitHub
-   - Selecciona el directorio `web` como raíz del proyecto
+1. **Conectar repositorio a Railway:**
+   - Ve a [Railway](https://railway.app)
+   - Crea un nuevo proyecto
+   - Selecciona "Deploy from GitHub repo"
+   - Elige el repositorio `botCTA-frontend` (o el que contenga el frontend)
+   - Railway detectará automáticamente el directorio `web` o puedes configurarlo manualmente
 
-2. **Configurar variables de entorno:**
-   - En la configuración del proyecto, ve a "Environment Variables"
+2. **Configurar Root Directory (si es necesario):**
+   - En Settings → Source → Root Directory, establece: `web`
+
+3. **Configurar variables de entorno:**
+   - Ve a Variables en el servicio
    - Agrega todas las variables mencionadas arriba
+   - **Importante:** Marca `PUBLIC_BACKEND_URL` y `PUBLIC_ALLOWED_CALLERS` como "Public"
 
-3. **Configurar Discord OAuth:**
-   - En Discord Developer Portal, agrega la URL de callback:
-     `https://tu-dominio.vercel.app/api/auth/callback`
+4. **Configurar Discord OAuth:**
+   - En Discord Developer Portal → OAuth2 → Redirects
+   - Agrega la URL de callback de Railway:
+     `https://tu-dominio.up.railway.app/api/auth/callback`
+   - Actualiza `DISCORD_REDIRECT_URI` en Railway con esta URL
 
-4. **Desplegar:**
-   - Vercel detectará automáticamente los cambios y desplegará
+5. **Desplegar:**
+   - Railway detectará automáticamente los cambios y desplegará
+   - El build ejecutará `npm run build`
+   - El servidor iniciará con `npm start`
 
 ## 🛠️ Desarrollo Local
 
